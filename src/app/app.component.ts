@@ -22,21 +22,46 @@ export class AppComponent  {
         filter: 'agTextColumnFilter'
       },
       { headerName: 'Age', field: 'age', sortable: true, filter: 'agNumberColumnFilter' },
-      { headerName: 'Year', field: 'year', sortable: true, filter: 'agNumberColumnFilter' },
+      { headerName: 'Date', field: 'date', sortable: true, filter: true, type: ['dateColumn', 'nonEditableColumn'] },
       { headerName: 'Gold', field: 'gold', sortable: true, filter: 'agNumberColumnFilter' },
       { headerName: 'Silver', field: 'silver', sortable: true, filter: 'agNumberColumnFilter' },
       { headerName: 'Bronze', field: 'bronze', sortable: true, filter: 'agNumberColumnFilter' },
   ];
   modules: any[] = AllCommunityModules;
   defaultColDef = {
-      width: 150,
-      editable: true,
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
-      resizable: true,
-    };
-
-  paginationPageSize: number = 50;
+    width: 150,
+    editable: true,
+    filter: 'agTextColumnFilter',
+    floatingFilter: true,
+    resizable: true,
+  };
+  columnTypes = {
+    numberColumn: {
+      width: 130,
+      filter: 'agNumberColumnFilter',
+    },
+    nonEditableColumn: { editable: false },
+    dateColumn: {
+      filter: 'agDateColumnFilter',
+      filterParams: {
+        comparator: function (filterLocalDateAtMidnight, cellValue) {
+          var dateParts = cellValue.split('/');
+          var day = Number(dateParts[0]);
+          var month = Number(dateParts[1]) - 1;
+          var year = Number(dateParts[2]);
+          var cellDate = new Date(year, month, day);
+          if (cellDate < filterLocalDateAtMidnight) {
+            return -1;
+          } else if (cellDate > filterLocalDateAtMidnight) {
+            return 1;
+          } else {
+            return 0;
+          }
+        },
+      },
+    }
+  }
+  paginationPageSize: number = 10;
   postData: any[] = [];
   constructor(
     private apiCalls: ApiCallsService
