@@ -27,7 +27,7 @@ export class AppComponent  {
       { headerName: 'Silver', field: 'silver', sortable: true, filter: 'agNumberColumnFilter' },
       { headerName: 'Bronze', field: 'bronze', sortable: true, filter: 'agNumberColumnFilter' },
   ];
-  modules: any[] = AllCommunityModules;
+  // modules: any[] = AllCommunityModules;
   defaultColDef = {
     width: 150,
     editable: true,
