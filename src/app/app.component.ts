@@ -9,11 +9,11 @@ import { AllCommunityModules } from '@ag-grid-community/all-modules';
 })
 export class AppComponent  {
   columnDefs = [
-    {
-        headerName: 'ID',
-        field: 'id',
-        maxWidth: 75,
-      },
+    // {
+    //     headerName: 'ID',
+    //     field: 'id',
+    //     maxWidth: 75,
+    //   },
       {
         headerName: 'Athlete',
         field: 'athlete',
