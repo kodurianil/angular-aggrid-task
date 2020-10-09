@@ -22,7 +22,7 @@ export class AppComponent  {
         filter: 'agTextColumnFilter'
       },
       { headerName: 'Age', field: 'age', sortable: true, filter: 'agNumberColumnFilter' },
-      { headerName: 'Date', field: 'date', sortable: true, filter: true, type: ['dateColumn', 'nonEditableColumn'] },
+      { headerName: 'Date', field: 'date', sortable: true, type: ['dateColumn', 'nonEditableColumn'] },
       { headerName: 'Gold', field: 'gold', sortable: true, filter: 'agNumberColumnFilter' },
       { headerName: 'Silver', field: 'silver', sortable: true, filter: 'agNumberColumnFilter' },
       { headerName: 'Bronze', field: 'bronze', sortable: true, filter: 'agNumberColumnFilter' },
