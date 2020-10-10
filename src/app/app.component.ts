@@ -1,35 +1,88 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ICellRendererParams } from 'ag-grid-community';
 import { ApiCallsService } from './api-calls.service';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
+import { GridActionComponent } from './grid-action/grid-action.component';
+import { User } from './user';
 
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ]
 })
-export class AppComponent  {
+export class AppComponent implements OnInit {
   columnDefs = [
-    // {
-    //     headerName: 'ID',
-    //     field: 'id',
-    //     maxWidth: 75,
-    //   },
+      // {
+      //   headerName: 'ID',
+      //   field: 'id'
+      // },
       {
-        headerName: 'Athlete',
-        field: 'athlete',
-        minWidth: 190,
+        headerName: 'First Name',
+        field: 'firstName',
         sortable: true,
         filter: 'agTextColumnFilter'
       },
-      { headerName: 'Age', field: 'age', sortable: true, filter: 'agNumberColumnFilter' },
-      { headerName: 'Date', field: 'date', sortable: true, type: ['dateColumn', 'nonEditableColumn'] },
-      { headerName: 'Gold', field: 'gold', sortable: true, filter: 'agNumberColumnFilter' },
-      { headerName: 'Silver', field: 'silver', sortable: true, filter: 'agNumberColumnFilter' },
-      { headerName: 'Bronze', field: 'bronze', sortable: true, filter: 'agNumberColumnFilter' },
+      { 
+        headerName: 'Last Name',
+        field: 'lastName',
+        sortable: true,
+        filter: 'agTextColumnFilter'
+      },
+      { 
+        headerName: 'Mobile',
+        field: 'mobile',
+        sortable: true,
+        filter: 'agNumberColumnFilter'
+      },
+      { 
+        headerName: 'DOB',
+        field: 'dob',
+        sortable: true,
+        filter: 'agTextColumnFilter',
+        cellRenderer: (params) => {
+          console.log(params);
+          return `${params.value.day}/${params.value.month}/${params.value.year}`;
+        }
+      },
+      { 
+        headerName: 'Email',
+        field: 'email',
+        sortable: true,
+        filter: 'agTextColumnFilter'
+      },
+      { 
+        headerName: 'Address',
+        field: 'address',
+        sortable: true,
+        filter: 'agTextColumnFilter'
+      },
+      { 
+        headerName: 'Pincode',
+        field: 'pincode',
+        sortable: true,
+        filter: 'agNumberColumnFilter'
+      },
+      {
+        headerName: 'Action',
+        width: 200,
+        cellRenderer: 'btnCellRenderer',
+        cellRendererParams: {
+          clicked: (field: any, action: string) => {
+            // alert(`${field} was clicked ${action}`);
+            if ( action === 'edit') {
+              this.editUser(field);
+            } else if ( action === 'delete') {
+              this.deleteUser(field);
+            }
+          }
+        }
+      }
   ];
+  frameworkComponents = {
+    btnCellRenderer: GridActionComponent
+  };
   // modules: any[] = AllCommunityModules;
   defaultColDef = {
-    width: 150,
+    width: 200,
     editable: true,
     filter: 'agTextColumnFilter',
     floatingFilter: true,
@@ -62,16 +115,28 @@ export class AppComponent  {
     }
   }
   paginationPageSize: number = 10;
-  postData: any[] = [];
+  usersData: User[];
+  gridApi;
+  selectedUser: User;
   constructor(
     private apiCalls: ApiCallsService
-  ) {
-    this.getPosts();
+  ) {}
+
+  editUser(user: User) {
+    this.selectedUser = user;
+  }
+  deleteUser(user: User) {
+    this.apiCalls.removeUser(user);
+  }
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.apiCalls.users$.subscribe(usersResponse => {
+      this.usersData = usersResponse;
+      this.gridApi.setRowData(this.usersData);
+    });
   }
 
-  getPosts() {
-    this.apiCalls.getPosts().subscribe(postRespons => {
-      this.postData = postRespons;
-    });
+  ngOnInit() {
+
   }
 }
