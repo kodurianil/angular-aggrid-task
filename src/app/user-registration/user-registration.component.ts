@@ -14,15 +14,15 @@ export class UserRegistrationComponent implements OnInit {
   @Input()
   set user(value: User) {
     if (value) {
-      console.log(value);
-      this._user = value;
+      // console.log(value);
+      this._user = JSON.parse(JSON.stringify(value));
     } else {
       this.createNewUser();
     }
   }
-  get user(): User {
-    return this._user;
-  }
+  // get user(): User {
+  //   return this._user;
+  // }
   maxDate;
   constructor(
     private apiCallsService: ApiCallsService

@@ -64,6 +64,9 @@ export class AppComponent implements OnInit {
       {
         headerName: 'Action',
         width: 200,
+        sortable: false,
+        filter: false,
+        editable: false,
         cellRenderer: 'btnCellRenderer',
         cellRendererParams: {
           clicked: (field: any, action: string) => {
@@ -83,10 +86,10 @@ export class AppComponent implements OnInit {
   // modules: any[] = AllCommunityModules;
   defaultColDef = {
     width: 200,
-    editable: true,
     filter: 'agTextColumnFilter',
     floatingFilter: true,
     resizable: true,
+    editable: false
   };
   columnTypes = {
     numberColumn: {
@@ -123,7 +126,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   editUser(user: User) {
-    this.selectedUser = user;
+    this.selectedUser = JSON.parse(JSON.stringify(user));
   }
   deleteUser(user: User) {
     this.apiCalls.removeUser(user);
