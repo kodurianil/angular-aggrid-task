@@ -1,29 +1,29 @@
 <div class="jumbotron">
 <form class="row" #userForm="ngForm" (ngSubmit)="userForm.valid && addUser()">
-  <div class="form-group col-xs-12 col-sm-3 col-2">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="firstname">First Name</label>
     <input type="text" #firstName="ngModel" required class="form-control" id="firstname" name="firstname" [(ngModel)]="_user.firstName">
     <span *ngIf="userForm.submitted && firstName?.errors?.required" class="text-danger">Required</span>
   </div>
-  <div class="form-group col-xs-12 col-sm-3 col-2">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="lastName">Last Name</label>
     <input type="text" #lastName="ngModel" required class="form-control" id="lastName" name="lastName" [(ngModel)]="_user.lastName">
     <span *ngIf="userForm.submitted && lastName?.errors?.required" class="text-danger">Required</span>
   </div>
-  <div class="form-group col-xs-12 col-sm-3 col-2">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="email">Email</label>
     <input type="email" required #email="ngModel" email class="form-control" id="email" name="email" [(ngModel)]="_user.email">
     <span *ngIf="userForm.submitted && email?.errors?.required" class="text-danger">Required</span>
     <span *ngIf="userForm.submitted && !email?.errors?.required && email?.errors?.email" class="text-danger">Wrong email format</span>
   </div>
-  <div class="form-group col-xs-12 col-sm-3 col-2">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="mobile">Mobile</label>
     <input type="number" required #mobile="ngModel" class="form-control" appMinMaxValidator minlength="10" maxlength="10" id="mobile" name="mobile" [(ngModel)]="_user.mobile">
     <span *ngIf="userForm.submitted && mobile?.errors?.required" class="text-danger">Required</span>
     <span *ngIf="userForm.submitted && !mobile?.errors?.required && mobile?.errors?.minMaxError" class="text-danger">Please enter proper phone number</span>
     <!-- <pre>{{mobile?.errors | json}}</pre> -->
   </div>
-  <div class="form-group col-xs-12 col-sm-3 col-2">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="dob">DOB</label>
     <!-- <input type="text" class="form-control" > -->
     <div class="input-group">
@@ -37,12 +37,12 @@
     </div>
     <span *ngIf="userForm.submitted && dob?.errors?.required" class="text-danger">Required</span>
   </div>
-  <div class="form-group col-xs-12 col-sm-3 col-6">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="address">Address</label>
     <textarea name="address" #address="ngModel" required class="form-control" id="address" row="4" [(ngModel)]="_user.address"></textarea>
     <span *ngIf="userForm.submitted && address?.errors?.required" class="text-danger">Required</span>
   </div>
-  <div class="form-group col-xs-12 col-sm-3 col-2">
+  <div class="form-group col-xs-12 col-sm-3 col-md-2">
     <label for="pincode">Pincode</label>
     <input type="number" #pincode="ngModel" minlength="6" maxlength="6" appMinMaxValidator required class="form-control" id="pincode" name="pincode" [(ngModel)]
     ="_user.pincode">
